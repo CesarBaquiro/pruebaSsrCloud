@@ -1,12 +1,15 @@
 {
-  "name": "prueba-ssr",
+  "name": "super-river-c90d",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run build && wrangler pages dev dist/cloudflare --compatibility-date=2024-07-18 --experimental-local",
+    "build": "ng build && npm run process",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "serve:ssr:super-river-c90d": "node dist/super-river-c90d/server/server.mjs",
+    "process": "node ./tools/copy-files.mjs && node ./tools/alter-polyfills.mjs",
+    "deploy": "npm run build && wrangler pages deploy dist/cloudflare"
   },
   "private": true,
   "dependencies": {
@@ -17,6 +20,7 @@
     "@angular/forms": "^18.0.0",
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
+    "@angular/platform-server": "^18.0.0",
     "@angular/router": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -26,13 +30,18 @@
     "@angular-devkit/build-angular": "^18.0.4",
     "@angular/cli": "^18.0.4",
     "@angular/compiler-cli": "^18.0.0",
+    "@cloudflare/workers-types": "^4.20240718.0",
+    "@miniflare/tre": "^3.0.0-next.13",
+    "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^18.18.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.2"
+    "typescript": "~5.4.2",
+    "wrangler": "^0.0.0-f1596d7d"
   }
 }
